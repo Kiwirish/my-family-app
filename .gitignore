@@ -1,0 +1,6 @@
+# Ignore configuration files with sensitive data
+config.php
+
+# Ignore system files
+.DS_Store
+Thumbs.db
