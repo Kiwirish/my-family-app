@@ -35,7 +35,7 @@ $conn->close();
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Family Dreams TESTER </title>
+    <title>Family Dreams </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -106,7 +106,7 @@ $conn->close();
 </head>
 <body>
     <div class="container">
-        <h1>Family Dreams</h1>
+        <h1>TESTER PLSSS Family Dreams</h1>
 
         <?php if (isset($message)): ?>
             <div class="message">

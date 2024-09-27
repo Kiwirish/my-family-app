@@ -42,7 +42,7 @@ $conn->close();
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Admin TESTER - Manage Family Dreams</title>
+    <title>Admin - Manage Family Dreams</title>
     <style>
         /* Same styles as before, you can adjust as needed */
         body {
@@ -118,7 +118,7 @@ $conn->close();
 </head>
 <body>
     <div class="container">
-        <h1>Admin - Manage Family Dreams</h1>
+        <h1>Admin TEST - Manage Family Dreams</h1>
 
         <div class="nav-links">
             <a href="index.php">User Page</a>
