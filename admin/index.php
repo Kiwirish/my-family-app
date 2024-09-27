@@ -42,7 +42,7 @@ $conn->close();
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Admin - Manage Family Dreams</title>
+    <title>Admin TESTER - Manage Family Dreams</title>
     <style>
         /* Same styles as before, you can adjust as needed */
         body {
