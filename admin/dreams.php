@@ -28,27 +28,40 @@ $conn->close();
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Admin Dreams</title>
-    <!-- Include your CSS styling here -->
+    <title>Admin - Manage Dreams</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Manage Family Dreams</h1>
-    <?php if (isset($message)): ?>
-        <p><?php echo htmlspecialchars($message); ?></p>
-    <?php endif; ?>
+    <div class="container">
+        <!-- Navigation Menu -->
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="dreams.php">Manage Dreams</a>
+            <!-- Add other links as needed -->
+        </nav>
 
-    <!-- Display the list of dreams with delete option -->
-    <?php if ($result && $result->num_rows > 0): ?>
-        <ul>
-            <?php while($row = $result->fetch_assoc()): ?>
-                <li>
-                    <?php echo htmlspecialchars($row["dream"]); ?>
-                    <a href="?delete_id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure?');">Delete</a>
-                </li>
-            <?php endwhile; ?>
-        </ul>
-    <?php else: ?>
-        <p>No dreams found.</p>
-    <?php endif; ?>
+        <!-- Page Content -->
+        <h1>Manage Family Dreams</h1>
+        <?php if (isset($message)): ?>
+            <p class="message"><?php echo htmlspecialchars($message); ?></p>
+        <?php endif; ?>
+
+        <!-- Display the list of dreams with delete option -->
+        <?php if ($result && $result->num_rows > 0): ?>
+            <ul>
+                <?php while($row = $result->fetch_assoc()): ?>
+                    <li>
+                        <?php echo htmlspecialchars($row["dream"]); ?>
+                        <form method="GET" action="" class="delete-form">
+                            <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
+                            <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this dream?');">Delete</button>
+                        </form>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+        <?php else: ?>
+            <p>No dreams found.</p>
+        <?php endif; ?>
+    </div>
 </body>
 </html>

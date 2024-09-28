@@ -28,30 +28,42 @@ $conn->close();
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>User Dreams</title>
-    <!-- Include your CSS styling here -->
+    <title>Family Dreams</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Family Dreams</h1>
-    <?php if (isset($message)): ?>
-        <p><?php echo htmlspecialchars($message); ?></p>
-    <?php endif; ?>
+    <div class="container">
+        <!-- Navigation Menu -->
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="dreams.php">Dreams</a>
+            <!-- Add other links as needed -->
+        </nav>
 
-    <!-- Display the list of dreams -->
-    <?php if ($result && $result->num_rows > 0): ?>
-        <ul>
-            <?php while($row = $result->fetch_assoc()): ?>
-                <li><?php echo htmlspecialchars($row["dream"]); ?></li>
-            <?php endwhile; ?>
-        </ul>
-    <?php else: ?>
-        <p>No dreams found.</p>
-    <?php endif; ?>
+        <!-- Page Content -->
+        <h1>Leahy Family Dreams</h1>
+        <?php if (isset($message)): ?>
+            <p class="message"><?php echo htmlspecialchars($message); ?></p>
+        <?php endif; ?>
 
-    <!-- Form to add a new dream -->
-    <h2>Add a Dream</h2>
-    <form method="POST" action="">
-        <input type="text" name="dream" required>
-        <button type="submit" name="add_dream">Add Dream</button>
-    </form>
+        <!-- Display the list of dreams -->
+        <?php if ($result && $result->num_rows > 0): ?>
+            <ul>
+                <?php while($row = $result->fetch_assoc()): ?>
+                    <li><?php echo htmlspecialchars($row["dream"]); ?></li>
+                <?php endwhile; ?>
+            </ul>
+        <?php else: ?>
+            <p>No dreams found.</p>
+        <?php endif; ?>
+
+        <!-- Form to add a new dream -->
+        <h2>Add a Dream</h2>
+        <form method="POST" action="">
+            <label for="dream">Your Dream:</label>
+            <input type="text" id="dream" name="dream" required>
+            <button type="submit" name="add_dream">Add Dream</button>
+        </form>
+    </div>
 </body>
+</html>

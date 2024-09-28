@@ -1,0 +1,148 @@
+/* admin/css/styles.css */
+
+/* Base Styles */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fffaf0; /* Light beige background */
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  h1, h2 {
+    text-align: center;
+    color: #8e44ad;
+  }
+  
+  p.message {
+    background-color: #fcf8e3; /* Light yellow background */
+    border: 1px solid #faf2cc;
+    padding: 15px;
+    color: #8a6d3b;
+    border-radius: 5px;
+  }
+  
+  nav {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  nav a {
+    margin: 0 15px;
+    font-size: 18px;
+    color: #9b59b6;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  li {
+    background-color: #f2f1ef; /* Slightly different light grey */
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .delete-form {
+    display: inline-block;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+  }
+  
+  .delete-button {
+    background-color: #e74c3c;
+    color: #ffffff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .delete-button:hover {
+    background-color: #c0392b;
+  }
+  
+  form {
+    margin-top: 30px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #8e44ad;
+  }
+  
+  input[type="text"],
+  input[type="file"],
+  textarea {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  button {
+    background-color: #9b59b6; /* Primary button color */
+    color: #ffffff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-color: #8e44ad;
+  }
+  
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .gallery img {
+    max-width: 200px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  /* Responsive Design */
+  
+  @media (max-width: 600px) {
+    .container {
+      padding: 15px 20px;
+    }
+  
+    nav a {
+      margin: 0 10px;
+      font-size: 16px;
+    }
+  }
+  
