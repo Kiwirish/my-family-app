@@ -8,7 +8,16 @@ $username = "admin";
 $password = "mypassword";
 $dbname = "family";
 
-require_once 'aws-config.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+use Aws\S3\S3Client;
+
+// AWS SDK Configuration using environment variables
+$s3Client = new S3Client([
+    'version'     => 'latest',
+    'region'      => 'us-east-1',
+    // Credentials are automatically picked up from environment variables
+]);
 
 use Aws\S3\Exception\S3Exception;
 
