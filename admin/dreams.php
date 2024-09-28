@@ -29,7 +29,7 @@ $conn->close();
 <html>
 <head>
     <title>Admin - Manage Dreams</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="admin/css/styles.css">
 </head>
 <body>
     <div class="container">
