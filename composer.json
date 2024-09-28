@@ -1,0 +1,12 @@
+{
+    "name": "blakeleahy/my-family-app",
+    "authors": [
+        {
+            "name": "Kiwirish",
+            "email": "blakeleahy7@gmail.com"
+        }
+    ],
+    "require": {
+        "aws/aws-sdk-php": "^3.322"
+    }
+}
