@@ -119,9 +119,9 @@ $conn->close();
 <body>
     <div class="container">
         <h1>Admin TEST - Manage Family Dreams</h1>
+        <a href="dreams.php">Manage Dreams</a>
 
         <div class="nav-links">
-            <a href="index.php">User Page</a>
             <!-- Add other navigation links if needed -->
         </div>
 

@@ -124,12 +124,9 @@ $conn->close();
             <p>No dreams found.</p>
         <?php endif; ?>
 
-        <h2>Add a Dream</h2>
-        <form method="POST" action="">
-            <label for="dream">Your Dream:</label>
-            <input type="text" id="dream" name="dream" required>
-            <button type="submit">Add Dream</button>
-        </form>
+        <h2>Leahy Family User</h2>
+        <a href="dreams.php">View and Add Dreams</a>
+
     </div>
 </body>
 </html>
