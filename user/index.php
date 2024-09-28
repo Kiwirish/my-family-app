@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 <html>
 <head>
     <title>Family Dreams - Home</title>
-    <link rel="stylesheet" href="user/css/styles.css">
+    <link rel="stylesheet" href="user/css/style.css">
 </head>
 <body>
     <div class="container">
