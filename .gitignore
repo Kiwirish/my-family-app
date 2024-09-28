@@ -4,3 +4,5 @@ config.php
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+aws-config.php
