@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 <html>
 <head>
     <title>Admin - Home</title>
-    <link rel="stylesheet" href="admin/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
