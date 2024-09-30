@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require '/var/www/html/vendor/autoload.php'; // Absolute path to autoload.php
 
 use Aws\Sns\SnsClient;
 use Aws\Exception\AwsException;
