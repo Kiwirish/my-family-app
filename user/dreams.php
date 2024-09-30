@@ -36,17 +36,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         // Dream added successfully, send SNS notification
-        try {
-            $result = $snsClient->publish([
-                'TopicArn' => 'arn:aws:sns:us-east-1:YOUR_AWS_ACCOUNT_ID:FamilyDreamNotifications', // Use your topic ARN
-                'Message' => "A new dream has been added: $dream",
-                'Subject' => 'New Dream Added to Family App',
-            ]);
-            echo "New dream added successfully! Notification sent.";
-        } catch (AwsException $e) {
-            // Output error message if fails
-            echo "New dream added, but failed to send notification: " . $e->getMessage();
-        }
+        // try {
+        //     $result = $snsClient->publish([
+        //         'TopicArn' => 'arn:aws:sns:us-east-1:YOUR_AWS_ACCOUNT_ID:FamilyDreamNotifications', // Use your topic ARN
+        //         'Message' => "A new dream has been added: $dream",
+        //         'Subject' => 'New Dream Added to Family App',
+        //     ]);
+        //     echo "New dream added successfully! Notification sent.";
+        // } catch (AwsException $e) {
+        //     // Output error message if fails
+        //     echo "New dream added, but failed to send notification: " . $e->getMessage();
+        // }
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
