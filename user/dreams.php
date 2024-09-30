@@ -33,7 +33,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dream = $_POST["dream"];
     $sql = "INSERT INTO dreams (dream) VALUES ('$dream')";
-
+    $message = "Dream added successfully!";
     if ($conn->query($sql) === TRUE) {
         // Dream added successfully, send SNS notification
         // try {
