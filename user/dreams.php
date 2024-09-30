@@ -1,15 +1,15 @@
 <?php
 
 
-use Aws\Sns\SnsClient;
-use Aws\Exception\AwsException;
+// use Aws\Sns\SnsClient;
+// use Aws\Exception\AwsException;
 
-// AWS SDK Configuration using environment variables
-$snsClient = new SnsClient([
-    'version' => 'latest',
-    'region' => 'us-east-1', // Ensure this is your region
-    // Credentials are automatically picked up from environment variables or EC2 IAM roles
-]);
+// // AWS SDK Configuration using environment variables
+// $snsClient = new SnsClient([
+//     'version' => 'latest',
+//     'region' => 'us-east-1', // Ensure this is your region
+//     // Credentials are automatically picked up from environment variables or EC2 IAM roles
+// ]);
 
 // Connect to the RDS MySQL database
 $servername = "family-app-db.cblynykvsyaq.us-east-1.rds.amazonaws.com";
