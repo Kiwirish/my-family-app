@@ -27,7 +27,7 @@ if ($conn->connect_error) {
         <nav>
             <a href="index.php">Home</a>
             <a href="dreams.php">Dreams</a>
-            <a href="photos.php">Photo Album</a>
+            <a href="snstest.php">SNS Test</a>
 
             <!-- Add other links as needed -->
         </nav>
