@@ -22,36 +22,36 @@ $dbname = "family";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check for form submission to add a new dream
-// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_dream'])) {
-//     $dream = $conn->real_escape_string($_POST["dream"]);
-//     $stmt = $conn->prepare("INSERT INTO dreams (dream) VALUES (?)");
-//     $stmt->bind_param("s", $dream);
-//     $stmt->execute();
-//     $stmt->close();
-//     $message = "Dream added successfully!";
-// }
-// If the form is submitted, insert the dream
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $dream = $_POST["dream"];
-    $sql = "INSERT INTO dreams (dream) VALUES ('$dream')";
-    if ($conn->query($sql) === TRUE) {
-        // Dream added successfully, send SNS notification
-
-        try {
-            $result = $snsClient->publish([
-                'TopicArn' => 'arn:aws:sns:us-east-1:YOUR_AWS_ACCOUNT_ID:FamilyDreamNotifications', // Use your topic ARN
-                'Message' => "A new dream has been added: $dream",
-                'Subject' => 'New Dream Added to Family App',
-            ]);
-            echo "New dream added successfully! Notification sent.";
-        } catch (AwsException $e) {
-            // Output error message if fails
-            echo "New dream added, but failed to send notification: " . $e->getMessage();
-        }
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_dream'])) {
+    $dream = $conn->real_escape_string($_POST["dream"]);
+    $stmt = $conn->prepare("INSERT INTO dreams (dream) VALUES (?)");
+    $stmt->bind_param("s", $dream);
+    $stmt->execute();
+    $stmt->close();
+    $message = "Dream added successfully!";
 }
+// If the form is submitted, insert the dream
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $dream = $_POST["dream"];
+//     $sql = "INSERT INTO dreams (dream) VALUES ('$dream')";
+//     if ($conn->query($sql) === TRUE) {
+//         // Dream added successfully, send SNS notification
+
+//         try {
+//             $result = $snsClient->publish([
+//                 'TopicArn' => 'arn:aws:sns:us-east-1:YOUR_AWS_ACCOUNT_ID:FamilyDreamNotifications', // Use your topic ARN
+//                 'Message' => "A new dream has been added: $dream",
+//                 'Subject' => 'New Dream Added to Family App',
+//             ]);
+//             echo "New dream added successfully! Notification sent.";
+//         } catch (AwsException $e) {
+//             // Output error message if fails
+//             echo "New dream added, but failed to send notification: " . $e->getMessage();
+//         }
+//     } else {
+//         echo "Error: " . $sql . "<br>" . $conn->error;
+//     }
+// }
 
 // Retrieve all dreams
 $result = $conn->query("SELECT * FROM dreams ORDER BY id DESC");
