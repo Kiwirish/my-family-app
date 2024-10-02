@@ -1,7 +1,6 @@
 /* admin/css/styles.css */
 
-/* Base Styles */
-/* General Styles */
+/* Base Styles *//* General Styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #e0f7fa; /* Light blue background */
@@ -33,10 +32,12 @@ p.message {
   border-radius: 5px;
 }
 
-.container p {
-  text-align: center;
-  font-size: 1.2em;
-  color: #34495E;
+.error-message {
+  background-color: #f8d7da; /* Light red background for error messages */
+  border: 1px solid #f5c6cb;
+  padding: 15px;
+  color: #721c24;
+  border-radius: 5px;
 }
 
 ul {
@@ -63,7 +64,8 @@ label {
 }
 
 input[type="text"],
-textarea {
+textarea,
+input[type="datetime-local"] {
   width: 100%;
   padding: 10px 15px;
   margin-bottom: 20px;
@@ -72,7 +74,8 @@ textarea {
   font-size: 16px;
 }
 
-button {
+button,
+.btn {
   background-color: #007bff; /* Primary button color: Blue */
   color: #ffffff;
   padding: 10px 20px;
@@ -84,11 +87,12 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+button:hover,
+.btn:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
 
-/* Navigation Bar Styles for Users */
+/* User Navigation Bar Styles */
 .navbar-custom {
   background-color: #5DADE2; /* Softer blue */
   position: fixed;
@@ -125,40 +129,15 @@ button:hover {
   color: #1A5276; /* Darker text on hover */
 }
 
-.navbar-toggler {
+.navbar-custom .navbar-toggler {
   border: none;
 }
 
-.navbar-toggler-icon {
+.navbar-custom .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%232C3E50' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-/* Message Card Styles */
-.message-card {
-  margin-bottom: 20px;
-  border: 1px solid #cfd8dc;
-  background-color: #e3f2fd; /* Very light blue for message cards */
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.message-card .card-title {
-  font-size: 1.25rem;
-  color: #2C3E50;
-}
-
-.message-card .card-subtitle {
-  font-size: 0.9rem;
-  color: #90a4ae;
-}
-
-.message-card .card-text {
-  font-size: 1rem;
-  color: #333;
-}
-
-/* Admin Specific Styles */
+/* Admin Navigation Bar Styles */
 .navbar-admin {
   background-color: #34495E; /* Darker blue-grey for admin navbar */
   position: fixed;
@@ -195,19 +174,12 @@ button:hover {
   color: #2C3E50; /* Darker text on hover */
 }
 
-.admin-button {
-  background-color: #2C3E50; /* Dark blue-grey */
-  color: #ecf0f1;
-  padding: 8px 16px;
+.navbar-admin .navbar-toggler {
   border: none;
-  border-radius: 15px; /* Rounded button */
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
 }
 
-.admin-button:hover {
-  background-color: #95a5a6; /* Darker grey on hover */
+.navbar-admin .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ecf0f1' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 /* Delete Button Specific Styles */
@@ -229,6 +201,32 @@ button:hover {
 
 .delete-button:hover {
   background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Poll Results Section */
+.poll-results {
+  background-color: #f9f9f9;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.poll-results h2 {
+  color: #2c3e50;
+}
+
+.poll-results ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.poll-results li {
+  background-color: #ffffff;
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 /* Responsive Design */

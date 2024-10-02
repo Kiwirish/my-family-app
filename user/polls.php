@@ -124,6 +124,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Retrieve active polls (not expired)
 $current_datetime = date("Y-m-d H:i:s");
 $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR expires_at > '$current_datetime' ORDER BY created_at DESC");
+
+// Retrieve poll results
+$results = $conn->query("SELECT pr.poll_id, p.question, pr.result_text 
+                        FROM poll_results pr
+                        JOIN polls p ON pr.poll_id = p.id
+                        ORDER BY pr.posted_at DESC");
 ?>
 <!DOCTYPE html>
 <html>
@@ -150,30 +156,6 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
                 <li class="nav-item active"><a class="nav-link" href="polls.php">Polls</a></li>
                 <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
                 <!-- Add other links as needed -->
-                <!-- Poll Results Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="pollResultsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Poll Results
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="pollResultsDropdown">
-                        <?php
-                        // Retrieve all poll results
-                        $results = $conn->query("SELECT pr.poll_id, p.question, pr.result_text 
-                                                FROM poll_results pr
-                                                JOIN polls p ON pr.poll_id = p.id
-                                                ORDER BY pr.posted_at DESC");
-                        if ($results && $results->num_rows > 0):
-                            while($res = $results->fetch_assoc()):
-                        ?>
-                            <a class="dropdown-item" href="#"><?php echo htmlspecialchars($res["question"]); ?>: <?php echo htmlspecialchars($res["result_text"]); ?></a>
-                        <?php
-                            endwhile;
-                        else:
-                        ?>
-                            <a class="dropdown-item" href="#">No poll results available.</a>
-                        <?php endif; ?>
-                    </div>
-                </li>
             </ul>
         </div>
     </nav>
@@ -181,6 +163,26 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
     <div class="container">
         <!-- Page Content -->
         <h1 class="text-center">Family Polls</h1>
+        <p class="text-center">Participate in family polls or create your own to engage with family members.</p>
+
+        <!-- Poll Results Section -->
+        <div class="poll-results">
+            <h2>Poll Results</h2>
+            <?php if ($results && $results->num_rows > 0): ?>
+                <ul>
+                    <?php while($res = $results->fetch_assoc()): ?>
+                        <li>
+                            <strong><?php echo htmlspecialchars($res["question"]); ?></strong><br>
+                            <?php echo nl2br(htmlspecialchars($res["result_text"])); ?>
+                        </li>
+                    <?php endwhile; ?>
+                </ul>
+            <?php else: ?>
+                <p>No poll results available.</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- Display Success or Error Messages -->
         <?php if (!empty($message)): ?>
             <div class="alert alert-success" role="alert">
                 <?php echo htmlspecialchars($message); ?>
@@ -225,18 +227,14 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
                             </div>
                             <button type="submit" name="vote" class="btn btn-primary">Vote</button>
                         </form>
-                        <!-- Display Poll Result Dropdown (if exists) -->
+                        <!-- Display Poll Result if exists -->
                         <?php
                         $poll_result = getPollResult($conn, $poll_id);
                         if ($poll_result):
                         ?>
-                            <div class="mt-3">
-                                <button class="btn btn-info dropdown-toggle" type="button" id="resultDropdown<?php echo $poll_id; ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    View Poll Result
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="resultDropdown<?php echo $poll_id; ?>">
-                                    <span class="dropdown-item-text"><?php echo nl2br(htmlspecialchars($poll_result)); ?></span>
-                                </div>
+                            <div class="mt-3 poll-results">
+                                <h5>Poll Result:</h5>
+                                <p><?php echo nl2br(htmlspecialchars($poll_result)); ?></p>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -298,3 +296,8 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
     </script>
 </body>
 </html>
+
+<?php
+// Close the database connection
+$conn->close();
+?>

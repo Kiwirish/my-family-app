@@ -30,6 +30,7 @@ if ($conn->connect_error) {
 $message = '';
 $error = '';
 
+
 // Handle posting poll results
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_result'])) {
     $poll_id = intval($_POST["poll_id"]);
@@ -72,21 +73,21 @@ function getPollResult($conn, $poll_id) {
 <body>
     <!-- Navigation Menu -->
     <nav class="navbar navbar-expand-lg navbar-admin fixed-top">
-        <a class="navbar-brand" href="index.php">Leahy's Admin</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNav" 
-            aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="adminNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="dreams.php">Manage Dreams</a></li>
-                <li class="nav-item"><a class="nav-link" href="messages.php">Manage Messages</a></li>
-                <li class="nav-item active"><a class="nav-link" href="polls.php">Manage Polls</a></li>
-                <!-- Add other links as needed -->
-            </ul>
-        </div>
-    </nav>
+    <a class="navbar-brand" href="index.php">Leahy's Admin</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNav" 
+        aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="adminNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="dreams.php">Manage Dreams</a></li>
+            <li class="nav-item"><a class="nav-link" href="messages.php">Manage Messages</a></li>
+            <li class="nav-item"><a class="nav-link" href="polls.php">Manage Polls</a></li>
+            <!-- Add other links as needed -->
+        </ul>
+    </div>
+</nav>
 
     <div class="container">
         <!-- Page Content -->
@@ -95,7 +96,7 @@ function getPollResult($conn, $poll_id) {
             <p class="message"><?php echo htmlspecialchars($message); ?></p>
         <?php endif; ?>
         <?php if (!empty($error)): ?>
-            <p class="message" style="background-color: #f8d7da; border-color: #f5c6cb; color: #721c24;"><?php echo htmlspecialchars($error); ?></p>
+            <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
 
         <!-- Display All Polls with Votes and Results -->
