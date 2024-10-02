@@ -29,6 +29,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+
 // Initialize variables for messages
 $message = '';
 $error = '';
@@ -62,16 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
 
             // Send SNS notification (optional)
-            // try {
-            //     $result = $snsClient->publish([
-            //         'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
-            //         'Message'  => "A new poll has been created: \"$question\"",
-            //         'Subject'  => 'New Family Poll Created',
-            //     ]);
-            //     $message = "Poll created successfully! Notification sent.";
-            // } catch (AwsException $e) {
-            //     $message = "Poll created, but failed to send notification: " . $e->getMessage();
-            // }
+            try {
+                $result = $snsClient->publish([
+                    'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
+                    'Message'  => "A new poll has been created: \"$question\"",
+                    'Subject'  => 'New Family Poll Created',
+                ]);
+                $message = "Poll created successfully! Notification sent.";
+            } catch (AwsException $e) {
+                $message = "Poll created, but failed to send notification: " . $e->getMessage();
+            }
         } else {
             $error = "Error creating poll: " . $stmt->error;
         }
@@ -104,16 +105,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
 
             // Optional: Send SNS notification about the new vote
-            // try {
-            //     $result = $snsClient->publish([
-            //         'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
-            //         'Message'  => "$voter_name voted on poll ID $poll_id.",
-            //         'Subject'  => 'New Vote Casted',
-            //     ]);
-            //     $message = "Your vote has been recorded! Notification sent.";
-            // } catch (AwsException $e) {
-            //     $message = "Your vote has been recorded, but failed to send notification: " . $e->getMessage();
-            // }
+            try {
+                $result = $snsClient->publish([
+                    'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
+                    'Message'  => "$voter_name voted on poll ID $poll_id.",
+                    'Subject'  => 'New Vote Casted',
+                ]);
+                $message = "Your vote has been recorded! Notification sent.";
+            } catch (AwsException $e) {
+                $message = "Your vote has been recorded, but failed to send notification: " . $e->getMessage();
+            }
         } else {
             $error = "Error recording your vote: " . $stmt->error;
         }
@@ -149,16 +150,37 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
                 <li class="nav-item active"><a class="nav-link" href="polls.php">Polls</a></li>
                 <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
                 <!-- Add other links as needed -->
+                <!-- Poll Results Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="pollResultsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Poll Results
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="pollResultsDropdown">
+                        <?php
+                        // Retrieve all poll results
+                        $results = $conn->query("SELECT pr.poll_id, p.question, pr.result_text 
+                                                FROM poll_results pr
+                                                JOIN polls p ON pr.poll_id = p.id
+                                                ORDER BY pr.posted_at DESC");
+                        if ($results && $results->num_rows > 0):
+                            while($res = $results->fetch_assoc()):
+                        ?>
+                            <a class="dropdown-item" href="#"><?php echo htmlspecialchars($res["question"]); ?>: <?php echo htmlspecialchars($res["result_text"]); ?></a>
+                        <?php
+                            endwhile;
+                        else:
+                        ?>
+                            <a class="dropdown-item" href="#">No poll results available.</a>
+                        <?php endif; ?>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
 
     <div class="container">
         <!-- Page Content -->
-        <h1>Welcome to the Leahy Family Polls</h1>
-        <p class="text-center">Participate in family polls or create your own to engage with family members.</p>
-
-        <!-- Display Success or Error Messages -->
+        <h1 class="text-center">Family Polls</h1>
         <?php if (!empty($message)): ?>
             <div class="alert alert-success" role="alert">
                 <?php echo htmlspecialchars($message); ?>
@@ -203,6 +225,20 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
                             </div>
                             <button type="submit" name="vote" class="btn btn-primary">Vote</button>
                         </form>
+                        <!-- Display Poll Result Dropdown (if exists) -->
+                        <?php
+                        $poll_result = getPollResult($conn, $poll_id);
+                        if ($poll_result):
+                        ?>
+                            <div class="mt-3">
+                                <button class="btn btn-info dropdown-toggle" type="button" id="resultDropdown<?php echo $poll_id; ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    View Poll Result
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="resultDropdown<?php echo $poll_id; ?>">
+                                    <span class="dropdown-item-text"><?php echo nl2br(htmlspecialchars($poll_result)); ?></span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endwhile; ?>
@@ -262,8 +298,3 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
     </script>
 </body>
 </html>
-
-<?php
-// Close the database connection
-$conn->close();
-?>
