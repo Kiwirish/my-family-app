@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_result'])) {
                 $message = "Poll result posted successfully!";
 
                 // Retrieve the poll question for the notification
-                $stmt->close();
+                //$stmt->close();
                 $stmt = $conn->prepare("SELECT question FROM polls WHERE id = ?");
                 if (!$stmt) {
                     $error = "Preparation failed: (" . $conn->errno . ") " . $conn->error;
