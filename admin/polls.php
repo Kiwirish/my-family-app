@@ -1,6 +1,11 @@
 <?php
+// Enable error reporting for debugging (remove or comment out in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Include Composer's autoloader for AWS SDK
-require '/var/www/html/vendor/autoload.php';
+require '/var/www/html/vendor/autoload.php'; // Adjust the path if polls.php is in a subdirectory
 
 use Aws\Sns\SnsClient;
 use Aws\Exception\AwsException;
@@ -8,7 +13,7 @@ use Aws\Exception\AwsException;
 // AWS SDK Configuration
 $snsClient = new SnsClient([
     'version' => 'latest',
-    'region'  => 'us-east-1', // Replace with your AWS region
+    'region'  => 'us-east-1', // Ensure this is your AWS region
     // Credentials are automatically picked up from environment variables, IAM roles, or AWS credentials file
 ]);
 
@@ -26,48 +31,72 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Set character set to handle special characters
+$conn->set_charset("utf8mb4");
+
 // Initialize variables for messages
 $message = '';
 $error = '';
 
 // Handle posting poll results
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_result'])) {
-    $poll_id = intval($_POST["poll_id"]);
-    $poll_result = $conn->real_escape_string($_POST["poll_result"]);
+    // Validate and sanitize input
+    if (isset($_POST["poll_id"]) && isset($_POST["poll_result"])) {
+        $poll_id = intval($_POST["poll_id"]);
+        $poll_result = $conn->real_escape_string($_POST["poll_result"]);
 
-    // Insert poll result into poll_results table
-    $stmt = $conn->prepare("INSERT INTO poll_results (poll_id, result_text) VALUES (?, ?)");
-    $stmt->bind_param("is", $poll_id, $poll_result);
-    if ($stmt->execute()) {
-        $message = "Poll result posted successfully!";
+        // Insert poll result into poll_results table
+        $stmt = $conn->prepare("INSERT INTO poll_results (poll_id, result_text) VALUES (?, ?)");
+        if (!$stmt) {
+            $error = "Preparation failed: (" . $conn->errno . ") " . $conn->error;
+        } else {
+            $stmt->bind_param("is", $poll_id, $poll_result);
+            if ($stmt->execute()) {
+                $message = "Poll result posted successfully!";
 
-        // Retrieve the poll question for the notification
-        $stmt->close();
-        $stmt = $conn->prepare("SELECT question FROM polls WHERE id = ?");
-        $stmt->bind_param("i", $poll_id);
-        $stmt->execute();
-        $stmt->bind_result($poll_question);
-        $stmt->fetch();
-        $stmt->close();
+                // Retrieve the poll question for the notification
+                $stmt->close();
+                $stmt = $conn->prepare("SELECT question FROM polls WHERE id = ?");
+                if (!$stmt) {
+                    $error = "Preparation failed: (" . $conn->errno . ") " . $conn->error;
+                } else {
+                    $stmt->bind_param("i", $poll_id);
+                    if ($stmt->execute()) {
+                        $stmt->bind_result($poll_question);
+                        if ($stmt->fetch()) {
+                            $stmt->close();
 
-        // Prepare the notification message
-        $notification_message = "A new result has been posted for the poll: \"$poll_question\".\n\nResult: $poll_result";
+                            // Prepare the notification message
+                            $notification_message = "A new result has been posted for the poll: \"$poll_question\".\n\nResult: $poll_result";
 
-        try {
-            $result = $snsClient->publish([
-                'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:PollResultNotification', // Replace with your SNS Topic ARN
-                'Message'  => $notification_message,
-                'Subject'  => 'New Family Poll Result Posted',
-            ]);
-            $message .= " Notifications have been sent.";
-        } catch (AwsException $e) {
-            // Output error message if fails
-            $error = "Poll result posted, but failed to send notification: " . $e->getMessage();
+                            try {
+                                $result = $snsClient->publish([
+                                    'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:PollResultNotification', // Replace with your SNS Topic ARN
+                                    'Message'  => $notification_message,
+                                    'Subject'  => 'New Family Poll Result Posted',
+                                ]);
+                                $message .= " Notifications have been sent.";
+                            } catch (AwsException $e) {
+                                // Log the error message to server logs and set an error message
+                                error_log("SNS Publish Error: " . $e->getMessage());
+                                $error = "Poll result posted, but failed to send notification.";
+                            }
+                        } else {
+                            $error = "No poll found with the provided ID.";
+                        }
+                    } else {
+                        $error = "Execution failed: (" . $stmt->errno . ") " . $stmt->error;
+                    }
+                    $stmt->close();
+                }
+            } else {
+                $error = "Error posting poll result: " . $stmt->error;
+                $stmt->close();
+            }
         }
     } else {
-        $error = "Error posting poll result: " . $stmt->error;
+        $error = "Invalid form submission.";
     }
-    $stmt->close();
 }
 
 // Retrieve all polls
@@ -76,12 +105,21 @@ $polls_result = $conn->query("SELECT * FROM polls ORDER BY created_at DESC");
 // Function to get poll results
 function getPollResult($conn, $poll_id) {
     $stmt = $conn->prepare("SELECT result_text FROM poll_results WHERE poll_id = ?");
+    if (!$stmt) {
+        return "Preparation failed: (" . $conn->errno . ") " . $conn->error;
+    }
     $stmt->bind_param("i", $poll_id);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        return "Execution failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
     $stmt->bind_result($result_text);
-    $stmt->fetch();
-    $stmt->close();
-    return $result_text;
+    if ($stmt->fetch()) {
+        $stmt->close();
+        return $result_text;
+    } else {
+        $stmt->close();
+        return "No result found for this poll.";
+    }
 }
 ?>
 
@@ -97,36 +135,40 @@ function getPollResult($conn, $poll_id) {
 <body>
     <!-- Navigation Menu -->
     <nav class="navbar navbar-expand-lg navbar-admin fixed-top">
-    <a class="navbar-brand" href="index.php">Leahy's Admin</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNav" 
-        aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="adminNav">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="dreams.php">Manage Dreams</a></li>
-            <li class="nav-item"><a class="nav-link" href="messages.php">Manage Messages</a></li>
-            <li class="nav-item"><a class="nav-link" href="polls.php">Manage Polls</a></li>
-            <!-- Add other links as needed -->
-        </ul>
-    </div>
-</nav>
+        <a class="navbar-brand" href="index.php">Leahy's Admin</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNav" 
+            aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="adminNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="dreams.php">Manage Dreams</a></li>
+                <li class="nav-item"><a class="nav-link" href="messages.php">Manage Messages</a></li>
+                <li class="nav-item active"><a class="nav-link" href="polls.php">Manage Polls</a></li>
+                <!-- Add other links as needed -->
+            </ul>
+        </div>
+    </nav>
 
-    <div class="container">
+    <div class="container mt-5">
         <!-- Page Content -->
         <h1>Manage Family Polls</h1>
         <?php if (!empty($message)): ?>
-            <p class="message"><?php echo htmlspecialchars($message); ?></p>
+            <div class="alert alert-success" role="alert">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
         <?php endif; ?>
         <?php if (!empty($error)): ?>
-            <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
+            <div class="alert alert-danger" role="alert">
+                <?php echo htmlspecialchars($error); ?>
+            </div>
         <?php endif; ?>
 
         <!-- Display All Polls with Votes and Results -->
         <?php if ($polls_result && $polls_result->num_rows > 0): ?>
             <?php while($poll = $polls_result->fetch_assoc()): ?>
-                <div class="card message-card">
+                <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo htmlspecialchars($poll["question"]); ?></h5>
                         <p class="card-text">Created by: <?php echo htmlspecialchars($poll["created_by"]); ?></p>
@@ -156,7 +198,7 @@ function getPollResult($conn, $poll_id) {
                         <!-- Display Poll Result if exists -->
                         <?php
                         $poll_result = getPollResult($conn, $poll_id);
-                        if ($poll_result):
+                        if ($poll_result && $poll_result !== "No result found for this poll."):
                         ?>
                             <h6>Poll Result:</h6>
                             <p><?php echo nl2br(htmlspecialchars($poll_result)); ?></p>
@@ -180,7 +222,7 @@ function getPollResult($conn, $poll_id) {
     </div>
 
     <!-- Footer -->
-    <footer>
+    <footer class="mt-5">
         &copy; <?php echo date("Y"); ?> Leahy's App
     </footer>
 
