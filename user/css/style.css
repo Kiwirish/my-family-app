@@ -1,8 +1,8 @@
 /* user/css/styles.css */
-/* General Styles */
+/* General Styles *//* General Styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #EAF2F8; /* Light blue background */
+  background-color: #e0f7fa; /* Light blue background */
   margin: 0;
   padding-top: 70px; /* Space for fixed navbar */
   color: #333;
@@ -11,26 +11,21 @@ body {
 .container {
   width: 90%;
   max-width: 800px;
-  margin: 30px auto;
-  margin-top: 80px; 
-  background-color: #FFFFFF;
+  margin: 20px auto; /* Adjusted top margin for better spacing */
+  background-color: #ffffff;
   padding: 20px 30px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.container h1 {
-  margin-top: 0; /* Increased top margin */
-}
-
 h1, h2 {
   text-align: center;
-  color: #2C3E50; /* Dark blue-gray */
+  color: #2c3e50;
 }
 
 p.message {
-  background-color: #D4EDDA; /* Light green background for success messages */
-  border: 1px solid #C3E6CB;
+  background-color: #d4edda; /* Light green background for success messages */
+  border: 1px solid #c3e6cb;
   padding: 15px;
   color: #155724;
   border-radius: 5px;
@@ -48,7 +43,7 @@ ul {
 }
 
 li {
-  background-color: #F1F1F1; /* Light grey background */
+  background-color: #f1f1f1; /* Light grey background */
   margin: 10px 0;
   padding: 15px;
   border-radius: 5px;
@@ -62,7 +57,7 @@ label {
   display: block;
   margin-bottom: 10px;
   font-size: 18px;
-  color: #2C3E50;
+  color: #2c3e50;
 }
 
 input[type="text"],
@@ -70,25 +65,25 @@ textarea {
   width: 100%;
   padding: 10px 15px;
   margin-bottom: 20px;
-  border: 1px solid #BDC3C7;
+  border: 1px solid #bdc3c7;
   border-radius: 5px;
   font-size: 16px;
 }
 
 button {
-  background-color: #3498DB; /* Softer blue */
-  color: #FFFFFF;
+  background-color: #007bff; /* Primary button color: Blue */
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
-  border-radius: 15px; /* Slightly rounded */
+  border-radius: 15px; /* Rounded button */
   cursor: pointer;
   font-size: 18px;
-  width: auto; /* Remove width to let the button size to its content */
+  width: auto; /* Let the button size to its content */
   transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #2980B9; /* Slightly darker blue on hover */
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 /* Navigation Bar Styles */
@@ -98,7 +93,7 @@ button:hover {
   top: 0;
   width: 100%;
   z-index: 1000;
-  padding: 0.5rem 1rem; /* Reduce padding to make the navbar less thick */
+  padding: 0.5rem 1rem; /* Reduced padding for thinner navbar */
 }
 
 .navbar-custom .navbar-brand {
@@ -139,8 +134,8 @@ button:hover {
 /* Message Card Styles */
 .message-card {
   margin-bottom: 20px;
-  border: 1px solid #CFD8DC;
-  background-color: #EAF2F8; /* Very light blue for message cards */
+  border: 1px solid #cfd8dc;
+  background-color: #e3f2fd; /* Very light blue for message cards */
   border-radius: 8px;
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -148,12 +143,12 @@ button:hover {
 
 .message-card .card-title {
   font-size: 1.25rem;
-  color: #2C3E50;
+  color: #1e88e5;
 }
 
 .message-card .card-subtitle {
   font-size: 0.9rem;
-  color: #90A4AE;
+  color: #90a4ae;
 }
 
 .message-card .card-text {
@@ -168,7 +163,7 @@ button:hover {
   }
 
   .navbar-custom .nav-link {
-      margin-right: 10px;
+      margin-left: 10px;
       font-size: 16px;
   }
 }
@@ -177,7 +172,7 @@ button:hover {
 footer {
   margin-top: 40px;
   padding: 20px 0;
-  background-color: #F8F9FA;
+  background-color: #f8f9fa;
   text-align: center;
-  color: #7F8C8D;
+  color: #7f8c8d;
 }
