@@ -29,7 +29,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 // Initialize variables for messages
 $message = '';
 $error = '';
@@ -63,16 +62,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
 
             // Send SNS notification (optional)
-            try {
-                $result = $snsClient->publish([
-                    'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
-                    'Message'  => "A new poll has been created: \"$question\"",
-                    'Subject'  => 'New Family Poll Created',
-                ]);
-                $message = "Poll created successfully! Notification sent.";
-            } catch (AwsException $e) {
-                $message = "Poll created, but failed to send notification: " . $e->getMessage();
-            }
+            // try {
+            //     $result = $snsClient->publish([
+            //         'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
+            //         'Message'  => "A new poll has been created: \"$question\"",
+            //         'Subject'  => 'New Family Poll Created',
+            //     ]);
+            //     $message = "Poll created successfully! Notification sent.";
+            // } catch (AwsException $e) {
+            //     $message = "Poll created, but failed to send notification: " . $e->getMessage();
+            // }
         } else {
             $error = "Error creating poll: " . $stmt->error;
         }
@@ -105,16 +104,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
 
             // Optional: Send SNS notification about the new vote
-            try {
-                $result = $snsClient->publish([
-                    'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
-                    'Message'  => "$voter_name voted on poll ID $poll_id.",
-                    'Subject'  => 'New Vote Casted',
-                ]);
-                $message = "Your vote has been recorded! Notification sent.";
-            } catch (AwsException $e) {
-                $message = "Your vote has been recorded, but failed to send notification: " . $e->getMessage();
-            }
+            // try {
+            //     $result = $snsClient->publish([
+            //         'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
+            //         'Message'  => "$voter_name voted on poll ID $poll_id.",
+            //         'Subject'  => 'New Vote Casted',
+            //     ]);
+            //     $message = "Your vote has been recorded! Notification sent.";
+            // } catch (AwsException $e) {
+            //     $message = "Your vote has been recorded, but failed to send notification: " . $e->getMessage();
+            // }
         } else {
             $error = "Error recording your vote: " . $stmt->error;
         }
@@ -124,12 +123,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Retrieve active polls (not expired)
 $current_datetime = date("Y-m-d H:i:s");
 $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR expires_at > '$current_datetime' ORDER BY created_at DESC");
-
-// Retrieve poll results
-$results = $conn->query("SELECT pr.poll_id, p.question, pr.result_text 
-                        FROM poll_results pr
-                        JOIN polls p ON pr.poll_id = p.id
-                        ORDER BY pr.posted_at DESC");
 ?>
 <!DOCTYPE html>
 <html>
@@ -162,25 +155,8 @@ $results = $conn->query("SELECT pr.poll_id, p.question, pr.result_text
 
     <div class="container">
         <!-- Page Content -->
-        <h1 class="text-center">Family Polls</h1>
+        <h1>Welcome to the Leahy Family Polls</h1>
         <p class="text-center">Participate in family polls or create your own to engage with family members.</p>
-
-        <!-- Poll Results Section -->
-        <div class="poll-results">
-            <h2>Poll Results</h2>
-            <?php if ($results && $results->num_rows > 0): ?>
-                <ul>
-                    <?php while($res = $results->fetch_assoc()): ?>
-                        <li>
-                            <strong><?php echo htmlspecialchars($res["question"]); ?></strong><br>
-                            <?php echo nl2br(htmlspecialchars($res["result_text"])); ?>
-                        </li>
-                    <?php endwhile; ?>
-                </ul>
-            <?php else: ?>
-                <p>No poll results available.</p>
-            <?php endif; ?>
-        </div>
 
         <!-- Display Success or Error Messages -->
         <?php if (!empty($message)): ?>
@@ -227,16 +203,6 @@ $results = $conn->query("SELECT pr.poll_id, p.question, pr.result_text
                             </div>
                             <button type="submit" name="vote" class="btn btn-primary">Vote</button>
                         </form>
-                        <!-- Display Poll Result if exists -->
-                        <?php
-                        $poll_result = getPollResult($conn, $poll_id);
-                        if ($poll_result):
-                        ?>
-                            <div class="mt-3 poll-results">
-                                <h5>Poll Result:</h5>
-                                <p><?php echo nl2br(htmlspecialchars($poll_result)); ?></p>
-                            </div>
-                        <?php endif; ?>
                     </div>
                 </div>
             <?php endwhile; ?>
