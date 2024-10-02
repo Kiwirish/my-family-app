@@ -49,7 +49,7 @@ if ($conn->connect_error) {
     <div class="container">
         <!-- Page Content -->
         <h1>Welcome to the Leahy Family Admin Page</h1>
-        <p>Administrate the Leahy Family App!</p>
+        <p class="text-center">Administrate the Leahy Family App!</p>
     </div>
 
     <!-- Footer -->
