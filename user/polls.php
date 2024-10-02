@@ -61,17 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             $stmt->close();
 
-            // Send SNS notification (optional)
-            // try {
-            //     $result = $snsClient->publish([
-            //         'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
-            //         'Message'  => "A new poll has been created: \"$question\"",
-            //         'Subject'  => 'New Family Poll Created',
-            //     ]);
-            //     $message = "Poll created successfully! Notification sent.";
-            // } catch (AwsException $e) {
-            //     $message = "Poll created, but failed to send notification: " . $e->getMessage();
-            // }
+            $message = "Poll created successfully!";
         } else {
             $error = "Error creating poll: " . $stmt->error;
         }
@@ -102,23 +92,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("iis", $poll_id, $option_id, $voter_name);
         if ($stmt->execute()) {
             $stmt->close();
-
-            // Optional: Send SNS notification about the new vote
-            // try {
-            //     $result = $snsClient->publish([
-            //         'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:FamilyPollNotifications', // Replace with your SNS Topic ARN
-            //         'Message'  => "$voter_name voted on poll ID $poll_id.",
-            //         'Subject'  => 'New Vote Casted',
-            //     ]);
-            //     $message = "Your vote has been recorded! Notification sent.";
-            // } catch (AwsException $e) {
-            //     $message = "Your vote has been recorded, but failed to send notification: " . $e->getMessage();
-            // }
+            $message = "Your vote has been recorded!";
         } else {
             $error = "Error recording your vote: " . $stmt->error;
         }
     }
 }
+
+// Function to get poll results
+function getPollResult($conn, $poll_id) {
+    $stmt = $conn->prepare("SELECT result_text FROM poll_results WHERE poll_id = ?");
+    $stmt->bind_param("i", $poll_id);
+    $stmt->execute();
+    $stmt->bind_result($result_text);
+    $stmt->fetch();
+    $stmt->close();
+    return $result_text;
+}
+
+// Retrieve all poll results
+$results = $conn->query("SELECT pr.poll_id, p.question, pr.result_text 
+                        FROM poll_results pr
+                        JOIN polls p ON pr.poll_id = p.id
+                        ORDER BY pr.posted_at DESC");
 
 // Retrieve active polls (not expired)
 $current_datetime = date("Y-m-d H:i:s");
@@ -169,6 +165,23 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
                 <?php echo htmlspecialchars($error); ?>
             </div>
         <?php endif; ?>
+
+        <!-- Poll Results Section -->
+        <div class="poll-results">
+            <h2>Poll Results</h2>
+            <?php if ($results && $results->num_rows > 0): ?>
+                <ul>
+                    <?php while($res = $results->fetch_assoc()): ?>
+                        <li>
+                            <strong><?php echo htmlspecialchars($res["question"]); ?></strong><br>
+                            <?php echo nl2br(htmlspecialchars($res["result_text"])); ?>
+                        </li>
+                    <?php endwhile; ?>
+                </ul>
+            <?php else: ?>
+                <p>No poll results available.</p>
+            <?php endif; ?>
+        </div>
 
         <!-- Active Polls Section -->
         <h2>Active Polls</h2>
