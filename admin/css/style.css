@@ -13,10 +13,16 @@ body {
   width: 90%;
   max-width: 800px;
   margin: 20px auto; /* Adjusted top margin for better spacing */
+  margin-top: 80px; 
   background-color: #ffffff;
   padding: 20px 30px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+
+.container h1 {
+  margin-top: 0; /* Increased top margin */
 }
 
 h1, h2 {
