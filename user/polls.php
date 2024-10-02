@@ -142,8 +142,9 @@ $polls_result = $conn->query("SELECT * FROM polls WHERE expires_at IS NULL OR ex
                 <!-- Dynamically set active class based on current page -->
                 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="dreams.php">Dreams</a></li>
-                <li class="nav-item active"><a class="nav-link" href="polls.php">Polls</a></li>
                 <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
+                <li class="nav-item active"><a class="nav-link" href="polls.php">Polls</a></li>
+
                 <!-- Add other links as needed -->
             </ul>
         </div>
