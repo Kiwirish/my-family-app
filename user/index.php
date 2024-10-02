@@ -47,7 +47,7 @@ if ($conn->connect_error) {
     <div class="container">
         <!-- Page Content -->
         <h1>Welcome to the Leahy Family App</h1>
-        <p class="text-center">Share your greatest Leahy family dreams, add to the shared message board and vote on Leahy Polls!.</p>
+        <p class="text-center">A place for us Leahy's to share ideas, dreams and vote on topics!.</p>
         <!-- Add any additional content here -->
     </div>
 
