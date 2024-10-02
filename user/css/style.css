@@ -2,125 +2,160 @@
 
 /* Base Styles */
 
+/* General Styles */
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f8ff; /* Light blue background */
-    margin: 0;
-    padding: 0;
-    color: #333;
-  }
-  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f8ff; /* Light blue background */
+  margin: 0;
+  padding-top: 70px; /* Space for fixed navbar */
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 30px auto;
+  background-color: #ffffff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+p.message {
+  background-color: #dff0d8; /* Light green background */
+  border: 1px solid #d0e9c6;
+  padding: 15px;
+  color: #3c763d;
+  border-radius: 5px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  background-color: #ecf0f1; /* Light grey background */
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+form {
+  margin-top: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+input[type="text"],
+input[type="file"],
+textarea {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #3498db; /* Primary button color */
+  color: #ffffff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Navigation Bar Styles */
+
+.navbar-custom {
+  background-color: #6f42c1; /* Purple color */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: #fff;
+}
+
+.navbar-custom .nav-link {
+  margin-right: 15px;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #dcdcdc;
+}
+
+.navbar-custom .navbar-nav .active > .nav-link {
+  font-weight: bold;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28 255, 255, 255, 0.5 %29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/ %3E%3C/svg%3E");
+}
+
+/* Message Card Styles for Messages Page */
+
+.message-card {
+  margin-bottom: 20px;
+}
+
+.message-card .card-title {
+  font-size: 1.25rem;
+  color: #2c3e50;
+}
+
+.message-card .card-subtitle {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.message-card .card-text {
+  font-size: 1rem;
+  color: #34495e;
+}
+
+/* Responsive Design */
+
+@media (max-width: 600px) {
   .container {
-    width: 90%;
-    max-width: 800px;
-    margin: 30px auto;
-    background-color: #ffffff;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-  
-  h1, h2 {
-    text-align: center;
-    color: #2c3e50;
-  }
-  
-  p.message {
-    background-color: #dff0d8; /* Light green background */
-    border: 1px solid #d0e9c6;
-    padding: 15px;
-    color: #3c763d;
-    border-radius: 5px;
-  }
-  
-  nav {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  nav a {
-    margin: 0 15px;
-    font-size: 18px;
-    color: #3498db;
-    text-decoration: none;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  li {
-    background-color: #ecf0f1; /* Light grey background */
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 5px;
-  }
-  
-  form {
-    margin-top: 30px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #2c3e50;
-  }
-  
-  input[type="text"],
-  input[type="file"],
-  textarea {
-    width: 100%;
-    padding: 10px 15px;
-    margin-bottom: 20px;
-    border: 1px solid #bdc3c7;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  button {
-    background-color: #3498db; /* Primary button color */
-    color: #ffffff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    width: 100%;
-  }
-  
-  button:hover {
-    background-color: #2980b9;
-  }
-  
-  .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-  }
-  
-  .gallery img {
-    max-width: 200px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  
-  /* Responsive Design */
-  
-  @media (max-width: 600px) {
-    .container {
       padding: 15px 20px;
-    }
-  
-    nav a {
-      margin: 0 10px;
-      font-size: 16px;
-    }
   }
-  
+
+  .navbar-custom .nav-link {
+      margin-right: 10px;
+      font-size: 16px;
+  }
+}
+
+/* Footer Styles */
+
+footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+  text-align: center;
+  color: #7f8c8d;
+}
+

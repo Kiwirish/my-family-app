@@ -1,8 +1,8 @@
 <?php
 // Display errors for debugging (remove in production)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 // Include Composer's autoloader
 require '/var/www/html/vendor/autoload.php';
@@ -73,34 +73,7 @@ $conn->close();
     <!-- Include Bootstrap CSS from CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom CSS Styles -->
-    <style>
-        body {
-            padding-top: 70px;
-        }
-        .message-board {
-            max-width: 800px;
-            margin: auto;
-        }
-        .message-card {
-            margin-bottom: 20px;
-        }
-        .message-form {
-            margin-top: 40px;
-        }
-        .navbar-custom {
-            background-color: #6f42c1;
-        }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link {
-            color: #fff;
-        }
-        footer {
-            margin-top: 40px;
-            padding: 20px 0;
-            background-color: #f8f9fa;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Navigation Menu -->
@@ -109,15 +82,17 @@ $conn->close();
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"     aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" #navbarNav>
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="dreams.php">Dreams</a></li>
                 <li class="nav-item active"><a class="nav-link" href="messages.php">Messages</a></li>
+                <!-- Add other links as needed -->
             </ul>
         </div>
     </nav>
 
-    <div class="container message-board">
+    <div class="container">
         <h1 class="text-center">Family Message Board</h1>
         <?php if ($message): ?>
             <div class="alert alert-success" role="alert">
@@ -173,4 +148,3 @@ $conn->close();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
