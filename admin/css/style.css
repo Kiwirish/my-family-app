@@ -190,7 +190,7 @@ button:hover,
 
 .navbar-admin .btn,
 .navbar-admin button {
-    color: #2C3E50; /* Darker text color for better visibility */
+    color: #2C3E50 !important; /* Darker text color for better visibility */
 }
 
 /* Delete Button Specific Styles */
