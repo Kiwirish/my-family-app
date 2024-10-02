@@ -12,6 +12,7 @@ body {
   width: 90%;
   max-width: 800px;
   margin: 30px auto;
+  margin-top: 80px; 
   background-color: #FFFFFF;
   padding: 20px 30px;
   border-radius: 10px;
@@ -19,7 +20,7 @@ body {
 }
 
 .container h1 {
-  margin-top: 40px; /* Increased top margin */
+  margin-top: 0; /* Increased top margin */
 }
 
 h1, h2 {
@@ -77,12 +78,12 @@ textarea {
 button {
   background-color: #3498DB; /* Softer blue */
   color: #FFFFFF;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 25px; /* Rounded button */
+  border-radius: 15px; /* Slightly rounded */
   cursor: pointer;
   font-size: 18px;
-  width: 100%;
+  width: auto; /* Remove width to let the button size to its content */
   transition: background-color 0.3s;
 }
 
@@ -97,11 +98,13 @@ button:hover {
   top: 0;
   width: 100%;
   z-index: 1000;
+  padding: 0.5rem 1rem; /* Reduce padding to make the navbar less thick */
 }
 
-.navbar-custom .navbar-brand,
-.navbar-custom .nav-link {
-  color: #2C3E50; /* Dark blue-gray text for better contrast */
+.navbar-custom .navbar-brand {
+  color: #2C3E50;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .navbar-custom .navbar-nav {
@@ -113,9 +116,10 @@ button:hover {
 }
 
 .navbar-custom .nav-link {
-  font-size: 18px;
-  padding: 8px 20px;
-  border-radius: 20px; /* Rounded navbar links */
+  color: #2C3E50;
+  font-size: 1rem;
+  padding: 8px 15px;
+  border-radius: 15px; /* Slightly rounded navbar links */
   transition: background-color 0.3s;
 }
 
@@ -124,8 +128,12 @@ button:hover {
   color: #1A5276; /* Darker text on hover */
 }
 
+.navbar-toggler {
+  border: none;
+}
+
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28 44, 62, 80, 0.7 %29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/ %3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%232C3E50' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 /* Message Card Styles */

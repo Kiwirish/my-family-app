@@ -85,9 +85,9 @@ $conn->close();
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <!-- Adjust the active class dynamically as needed -->
-            <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="dreams.php">Dreams</a></li>
-            <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
+            <li class="nav-item active" ><a class="nav-link" href="index.php">Home</a></li>
+            <li class="nav-item active"><a class="nav-link" href="dreams.php">Dreams</a></li>
+            <li class="nav-item active"><a class="nav-link" href="messages.php">Messages</a></li>
         </ul>
     </div>
 </nav>
