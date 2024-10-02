@@ -26,20 +26,20 @@ if ($conn->connect_error) {
 </head>
 <body>
     <!-- Navigation Menu -->
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
-        <a class="navbar-brand" href="index.php">Family App</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"     aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="dreams.php">Dreams</a></li>
-                <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
-                <!-- Add other links as needed -->
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <a class="navbar-brand" href="index.php">Family App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="dreams.php">Dreams</a></li>
+            <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
+            <!-- Add other links as needed -->
+        </ul>
+    </div>
+</nav>
 
     <div class="container">
         <!-- Page Content -->

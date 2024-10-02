@@ -1,12 +1,10 @@
 /* user/css/styles.css */
 
 /* Base Styles */
-
 /* General Styles */
-
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f8ff; /* Light blue background */
+  background-color: #fef5e7; /* Warm, soft beige background */
   margin: 0;
   padding-top: 70px; /* Space for fixed navbar */
   color: #333;
@@ -16,7 +14,7 @@ body {
   width: 90%;
   max-width: 800px;
   margin: 30px auto;
-  background-color: #ffffff;
+  background-color: #fff8f0; /* Soft off-white background */
   padding: 20px 30px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -24,14 +22,14 @@ body {
 
 h1, h2 {
   text-align: center;
-  color: #2c3e50;
+  color: #3e3e3e; /* Darker grey for text */
 }
 
 p.message {
-  background-color: #dff0d8; /* Light green background */
-  border: 1px solid #d0e9c6;
+  background-color: #ffefd5; /* Warm light peach background */
+  border: 1px solid #ffe4b5;
   padding: 15px;
-  color: #3c763d;
+  color: #8b4513;
   border-radius: 5px;
 }
 
@@ -41,7 +39,7 @@ ul {
 }
 
 li {
-  background-color: #ecf0f1; /* Light grey background */
+  background-color: #fffbf2; /* Very soft cream for message background */
   margin: 10px 0;
   padding: 15px;
   border-radius: 5px;
@@ -55,7 +53,7 @@ label {
   display: block;
   margin-bottom: 10px;
   font-size: 18px;
-  color: #2c3e50;
+  color: #5c4033; /* Warmer brown for labels */
 }
 
 input[type="text"],
@@ -64,13 +62,13 @@ textarea {
   width: 100%;
   padding: 10px 15px;
   margin-bottom: 20px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid #d2b48c; /* Light brown for borders */
   border-radius: 5px;
   font-size: 16px;
 }
 
 button {
-  background-color: #3498db; /* Primary button color */
+  background-color: #ff7f50; /* Coral button color */
   color: #ffffff;
   padding: 12px 20px;
   border: none;
@@ -81,13 +79,12 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: #ff6347; /* Darker coral on hover */
 }
 
 /* Navigation Bar Styles */
-
 .navbar-custom {
-  background-color: #6f42c1; /* Purple color */
+  background-color: #f4a261; /* Warm terracotta color */
   position: fixed;
   top: 0;
   width: 100%;
@@ -99,12 +96,17 @@ button:hover {
   color: #fff;
 }
 
-.navbar-custom .nav-link {
-  margin-right: 15px;
+.navbar-custom .navbar-link {
+  margin: 0 10px;
+}
+
+.navbar-custom .navbar-nav {
+  justify-content: space-around; /* Evenly spread items across the navbar */
+  width: 100%;
 }
 
 .navbar-custom .nav-link:hover {
-  color: #dcdcdc;
+  color: #ffe4c4;
 }
 
 .navbar-custom .navbar-nav .active > .nav-link {
@@ -116,28 +118,31 @@ button:hover {
 }
 
 /* Message Card Styles for Messages Page */
-
 .message-card {
   margin-bottom: 20px;
+  border: 1px solid #ffe4b5;
+  background-color: #ffefd5; /* Warm peach */
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .message-card .card-title {
   font-size: 1.25rem;
-  color: #2c3e50;
+  color: #5c4033;
 }
 
 .message-card .card-subtitle {
   font-size: 0.9rem;
-  color: #7f8c8d;
+  color: #8b4513;
 }
 
 .message-card .card-text {
   font-size: 1rem;
-  color: #34495e;
+  color: #333;
 }
 
 /* Responsive Design */
-
 @media (max-width: 600px) {
   .container {
       padding: 15px 20px;
@@ -150,7 +155,6 @@ button:hover {
 }
 
 /* Footer Styles */
-
 footer {
   margin-top: 40px;
   padding: 20px 0;
@@ -158,4 +162,3 @@ footer {
   text-align: center;
   color: #7f8c8d;
 }
-
