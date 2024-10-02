@@ -27,7 +27,7 @@ if ($conn->connect_error) {
 <body>
     <!-- Navigation Menu -->
 <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
-    <a class="navbar-brand" href="index.php">Family App</a>
+    <a class="navbar-brand" href="index.php">Leahy's App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

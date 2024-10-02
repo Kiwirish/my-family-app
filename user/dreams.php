@@ -59,42 +59,45 @@ $conn->close();
 </head>
 <body>
     <!-- Navigation Menu -->
-<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
-    <a class="navbar-brand" href="index.php">Family App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="dreams.php">Dreams</a></li>
-            <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
-            <!-- Add other links as needed -->
-        </ul>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <a class="navbar-brand" href="index.php">Leahy's App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="dreams.php">Dreams</a></li>
+                <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
+                <!-- Add other links as needed -->
+            </ul>
+        </div>
+    </nav>
 
     <div class="container">
-        <!-- Page Content -->
         <h1 class="text-center">Leahy Family Dreams</h1>
+        
+        <!-- Display Success Message if any -->
         <?php if (isset($message)): ?>
             <div class="alert alert-success" role="alert">
                 <?php echo htmlspecialchars($message); ?>
             </div>
         <?php endif; ?>
 
-        <!-- Display the list of dreams -->
+        <!-- Display List of Dreams -->
         <?php if ($result && $result->num_rows > 0): ?>
             <ul class="list-group">
                 <?php while($row = $result->fetch_assoc()): ?>
-                    <li class="list-group-item"><?php echo htmlspecialchars($row["dream"]); ?></li>
+                    <li class="list-group-item list-group-item-light rounded mb-2">
+                        <?php echo htmlspecialchars($row["dream"]); ?>
+                    </li>
                 <?php endwhile; ?>
             </ul>
         <?php else: ?>
             <p class="text-center">No dreams found.</p>
         <?php endif; ?>
 
-        <!-- Form to add a new dream -->
+        <!-- Form to Add a New Dream -->
         <div class="message-form">
             <h2>Add a Dream</h2>
             <form method="POST" action="">
@@ -102,7 +105,7 @@ $conn->close();
                     <label for="dream">Your Dream:</label>
                     <input type="text" class="form-control" id="dream" name="dream" required>
                 </div>
-                <button type="submit" name="add_dream" class="btn btn-primary">Add Dream</button>
+                <button type="submit" name="add_dream" class="btn btn-primary btn-block rounded">Add Dream</button>
             </form>
         </div>
     </div>
