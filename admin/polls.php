@@ -1,16 +1,16 @@
 <?php
-// Include Composer's autoloader for AWS SDK (if needed)
+// Include Composer's autoloader for AWS SDK
 require '/var/www/html/vendor/autoload.php';
 
-// use Aws\Sns\SnsClient;
-// use Aws\Exception\AwsException;
+use Aws\Sns\SnsClient;
+use Aws\Exception\AwsException;
 
-// // AWS SDK Configuration (if using SNS)
-// $snsClient = new SnsClient([
-//     'version' => 'latest',
-//     'region'  => 'us-east-1',
-//     // Credentials are automatically picked up from environment variables or EC2 IAM roles
-// ]);
+// AWS SDK Configuration
+$snsClient = new SnsClient([
+    'version' => 'latest',
+    'region'  => 'us-east-1', // Replace with your AWS region
+    // Credentials are automatically picked up from environment variables, IAM roles, or AWS credentials file
+]);
 
 // Database connection details
 $servername = "family-app-db.cblynykvsyaq.us-east-1.rds.amazonaws.com";
@@ -30,7 +30,6 @@ if ($conn->connect_error) {
 $message = '';
 $error = '';
 
-
 // Handle posting poll results
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_result'])) {
     $poll_id = intval($_POST["poll_id"]);
@@ -41,6 +40,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_result'])) {
     $stmt->bind_param("is", $poll_id, $poll_result);
     if ($stmt->execute()) {
         $message = "Poll result posted successfully!";
+
+        // Retrieve the poll question for the notification
+        $stmt->close();
+        $stmt = $conn->prepare("SELECT question FROM polls WHERE id = ?");
+        $stmt->bind_param("i", $poll_id);
+        $stmt->execute();
+        $stmt->bind_result($poll_question);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Prepare the notification message
+        $notification_message = "A new result has been posted for the poll: \"$poll_question\".\n\nResult: $poll_result";
+
+        try {
+            $result = $snsClient->publish([
+                'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:PollResultNotification', // Replace with your SNS Topic ARN
+                'Message'  => $notification_message,
+                'Subject'  => 'New Family Poll Result Posted',
+            ]);
+            $message .= " Notifications have been sent.";
+        } catch (AwsException $e) {
+            // Output error message if fails
+            $error = "Poll result posted, but failed to send notification: " . $e->getMessage();
+        }
     } else {
         $error = "Error posting poll result: " . $stmt->error;
     }
@@ -61,6 +84,7 @@ function getPollResult($conn, $poll_id) {
     return $result_text;
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

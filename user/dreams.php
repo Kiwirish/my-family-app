@@ -70,6 +70,8 @@ $conn->close();
             <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="dreams.php">Dreams</a></li>
             <li class="nav-item"><a class="nav-link" href="messages.php">Messages</a></li>
+            <li class="nav-item"><a class="nav-link" href="polls.php">Polls</a></li>
+
         </ul>
     </div>
 </nav>
