@@ -1,148 +1,254 @@
 /* admin/css/styles.css */
 
 /* Base Styles */
-
+/* General Styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fffaf0; /* Light beige background */
-    margin: 0;
-    padding: 0;
-    color: #333;
-  }
-  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e0f7fa; /* Light blue background */
+  margin: 0;
+  padding-top: 70px; /* Space for fixed navbar */
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto; /* Adjusted top margin for better spacing */
+  background-color: #ffffff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+p.message {
+  background-color: #d4edda; /* Light green background for success messages */
+  border: 1px solid #c3e6cb;
+  padding: 15px;
+  color: #155724;
+  border-radius: 5px;
+}
+
+.container p {
+  text-align: center;
+  font-size: 1.2em;
+  color: #34495E;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  background-color: #f1f1f1; /* Light grey background */
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+form {
+  margin-top: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #007bff; /* Primary button color: Blue */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px; /* Rounded button */
+  cursor: pointer;
+  font-size: 18px;
+  width: auto; /* Let the button size to its content */
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Navigation Bar Styles for Users */
+.navbar-custom {
+  background-color: #5DADE2; /* Softer blue */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 0.5rem 1rem; /* Reduced padding for thinner navbar */
+}
+
+.navbar-custom .navbar-brand {
+  color: #2C3E50;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-custom .navbar-nav {
+  margin-left: auto; /* Push navbar items to the right */
+}
+
+.navbar-custom .nav-item {
+  margin-left: 20px; /* Spacing between navbar items */
+}
+
+.navbar-custom .nav-link {
+  color: #2C3E50;
+  font-size: 1rem;
+  padding: 8px 15px;
+  border-radius: 15px; /* Slightly rounded navbar links */
+  transition: background-color 0.3s;
+}
+
+.navbar-custom .nav-link:hover {
+  background-color: #AED6F1; /* Slightly darker blue on hover */
+  color: #1A5276; /* Darker text on hover */
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%232C3E50' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Message Card Styles */
+.message-card {
+  margin-bottom: 20px;
+  border: 1px solid #cfd8dc;
+  background-color: #e3f2fd; /* Very light blue for message cards */
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.message-card .card-title {
+  font-size: 1.25rem;
+  color: #2C3E50;
+}
+
+.message-card .card-subtitle {
+  font-size: 0.9rem;
+  color: #90a4ae;
+}
+
+.message-card .card-text {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Admin Specific Styles */
+.navbar-admin {
+  background-color: #34495E; /* Darker blue-grey for admin navbar */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 0.5rem 1rem; /* Reduced padding for thinner navbar */
+}
+
+.navbar-admin .navbar-brand {
+  color: #ecf0f1;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-admin .navbar-nav {
+  margin-left: auto; /* Push navbar items to the right */
+}
+
+.navbar-admin .nav-item {
+  margin-left: 20px; /* Spacing between navbar items */
+}
+
+.navbar-admin .nav-link {
+  color: #ecf0f1;
+  font-size: 1rem;
+  padding: 8px 15px;
+  border-radius: 15px; /* Slightly rounded navbar links */
+  transition: background-color 0.3s;
+}
+
+.navbar-admin .nav-link:hover {
+  background-color: #95a5a6; /* Slightly darker grey on hover */
+  color: #2C3E50; /* Darker text on hover */
+}
+
+.admin-button {
+  background-color: #2C3E50; /* Dark blue-grey */
+  color: #ecf0f1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 15px; /* Rounded button */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.admin-button:hover {
+  background-color: #95a5a6; /* Darker grey on hover */
+}
+
+/* Delete Button Specific Styles */
+.delete-form {
+  display: inline;
+}
+
+.delete-button {
+  background-color: #e74c3c; /* Red for delete */
+  color: #ffffff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px; /* Rounded button */
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
   .container {
-    width: 90%;
-    max-width: 800px;
-    margin: 30px auto;
-    background-color: #ffffff;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-  
-  h1, h2 {
-    text-align: center;
-    color: #8e44ad;
-  }
-  
-  p.message {
-    background-color: #fcf8e3; /* Light yellow background */
-    border: 1px solid #faf2cc;
-    padding: 15px;
-    color: #8a6d3b;
-    border-radius: 5px;
-  }
-  
-  nav {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  nav a {
-    margin: 0 15px;
-    font-size: 18px;
-    color: #9b59b6;
-    text-decoration: none;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  li {
-    background-color: #f2f1ef; /* Slightly different light grey */
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 5px;
-    position: relative;
-  }
-  
-  .delete-form {
-    display: inline-block;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-  }
-  
-  .delete-button {
-    background-color: #e74c3c;
-    color: #ffffff;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .delete-button:hover {
-    background-color: #c0392b;
-  }
-  
-  form {
-    margin-top: 30px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #8e44ad;
-  }
-  
-  input[type="text"],
-  input[type="file"],
-  textarea {
-    width: 100%;
-    padding: 10px 15px;
-    margin-bottom: 20px;
-    border: 1px solid #bdc3c7;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  button {
-    background-color: #9b59b6; /* Primary button color */
-    color: #ffffff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    width: 100%;
-  }
-  
-  button:hover {
-    background-color: #8e44ad;
-  }
-  
-  .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-  }
-  
-  .gallery img {
-    max-width: 200px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  
-  /* Responsive Design */
-  
-  @media (max-width: 600px) {
-    .container {
       padding: 15px 20px;
-    }
-  
-    nav a {
-      margin: 0 10px;
-      font-size: 16px;
-    }
   }
-  
+
+  .navbar-custom .nav-link,
+  .navbar-admin .nav-link {
+      margin-left: 10px;
+      font-size: 16px;
+  }
+}
+
+/* Footer Styles */
+footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+  text-align: center;
+  color: #7f8c8d;
+}
