@@ -2,15 +2,15 @@
 // Include Composer's autoloader for AWS SDK (if needed)
 require '/var/www/html/vendor/autoload.php';
 
-// use Aws\Sns\SnsClient;
-// use Aws\Exception\AwsException;
+use Aws\Sns\SnsClient;
+use Aws\Exception\AwsException;
 
-// // AWS SDK Configuration (if using SNS)
-// $snsClient = new SnsClient([
-//     'version' => 'latest',
-//     'region'  => 'us-east-1',
-//     // Credentials are automatically picked up from environment variables or EC2 IAM roles
-// ]);
+// AWS SDK Configuration (if using SNS)
+$snsClient = new SnsClient([
+    'version' => 'latest',
+    'region'  => 'us-east-1',
+    // Credentials are automatically picked up from environment variables or EC2 IAM roles
+]);
 
 // Database connection details
 $servername = "family-app-db.cblynykvsyaq.us-east-1.rds.amazonaws.com";
@@ -40,7 +40,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_result'])) {
     $stmt = $conn->prepare("INSERT INTO poll_results (poll_id, result_text) VALUES (?, ?)");
     $stmt->bind_param("is", $poll_id, $poll_result);
     if ($stmt->execute()) {
-        $message = "Poll result posted successfully!";
+
+        //$message = "Poll result posted successfully!";
+
+        // Dream added successfully, send SNS notification
+        try {
+            $result = $snsClient->publish([
+                'TopicArn' => 'arn:aws:sns:us-east-1:573598993687:PollResultNotification', // Use your topic ARN
+                'Message' => "A new poll result has been added: $poll_result",
+                'Subject' => 'New Poll Result Posted by an Admin!',
+            ]);
+            $message = "New Poll Result Posted Successfully! Notification sent.";
+        } catch (AwsException $e) {
+            // Output error message if fails
+            $message = "New poll result posted, but failed to send notification: " . $e->getMessage();
+        }
+
+
+
     } else {
         $error = "Error posting poll result: " . $stmt->error;
     }
